@@ -1,0 +1,18 @@
+{% extends 'voting/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>Total Casted Votes</h1>
+    <p>Total Votes: {{ total_votes }}</p>
+    <h2>Vote Breakdown</h2>
+    <ul>
+        {% for vote in votes %}
+            <li>Candidate: {{ vote.candidate__name }}, Votes: {{ vote.count }}</li>
+        {% empty %}
+            <li>No votes cast yet</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back</a>
+</main>
+{% endblock %}

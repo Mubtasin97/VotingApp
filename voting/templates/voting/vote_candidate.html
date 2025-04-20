@@ -1,0 +1,28 @@
+{% extends 'voting/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>Select a Candidate</h1>
+    <form method="post" id="voteForm">
+        {% csrf_token %}
+        <div class="candidate-list">
+            {% for candidate in candidates %}
+                <div class="candidate">
+                    <input type="radio" id="candidate_{{ candidate.id }}" name="candidate_id" value="{{ candidate.id }}">
+                    <label for="candidate_{{ candidate.id }}">{{ candidate.name }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit your vote?');">Submit</button>
+    </form>
+</main>
+<script>
+    document.querySelectorAll('.candidate input').forEach(input => {
+        input.addEventListener('change', function() {
+            document.querySelectorAll('.candidate').forEach(div => div.classList.remove('selected'));
+            this.parentElement.classList.add('selected');
+        });
+    });
+</script>
+{% endblock %}

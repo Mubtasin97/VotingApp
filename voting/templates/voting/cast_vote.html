@@ -1,0 +1,17 @@
+{% extends 'voting/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>Cast Your Vote</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="voter_name">Enter your name:</label>
+            <input type="text" id="voter_name" name="voter_name" placeholder="Enter your name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Proceed for voting</button>
+    </form>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary">Home</a>
+</main>
+{% endblock %}

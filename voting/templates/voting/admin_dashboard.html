@@ -1,0 +1,24 @@
+{% extends 'voting/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>Admin Dashboard</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-buttons">
+        <a href="{% url 'total_votes' %}" class="btn btn-primary">Total Casted Vote</a>
+        <a href="{% url 'edit_candidates' %}" class="btn btn-primary">Edit Candidate</a>
+        <form method="post" action="{% url 'reset_vote' %}" onsubmit="return confirm('Are you sure you want to reset all votes?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Reset Vote</button>
+        </form>
+    </div>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary">Home</a>
+</main>
+{% endblock %}

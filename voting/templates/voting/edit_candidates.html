@@ -1,0 +1,43 @@
+{% extends 'voting/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>Edit Candidates</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="new_candidate">Add Candidate:</label>
+            <input type="text" id="new_candidate" name="new_candidate">
+            <button type="submit" name="add_candidate" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <h2>Current Candidates</h2>
+    <ul>
+        {% for candidate in candidates %}
+            <li>
+                {{ candidate.name }}
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                    <button type="submit" name="remove_candidate" class="btn btn-danger btn-small">Remove</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No candidates added</li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="start_voting" class="btn btn-success">Start Vote</button>
+    </form>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back</a>
+</main>
+{% endblock %}
